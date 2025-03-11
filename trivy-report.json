@@ -1,0 +1,17 @@
+{
+  "Results": [
+    {
+      "Target": "app.jar",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2023-1234",
+          "PkgName": "org.apache.logging.log4j",
+          "InstalledVersion": "2.12.1",
+          "FixedVersion": "2.17.1",
+          "Severity": "CRITICAL"
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,16 @@
+<ns0:project xmlns:ns0="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <ns0:modelVersion>4.0.0</ns0:modelVersion>
+
+    <ns0:groupId>com.example</ns0:groupId>
+    <ns0:artifactId>java-project</ns0:artifactId>
+    <ns0:version>1.0-SNAPSHOT</ns0:version>
+
+    <ns0:dependencies>
+        
+        <ns0:dependency>
+            <ns0:groupId>org.apache.logging.log4j</ns0:groupId>
+            <ns0:artifactId>log4j-core</ns0:artifactId>
+            <ns0:version>2.12.1</ns0:version>
+        </ns0:dependency>
+    </ns0:dependencies>
+</ns0:project>
