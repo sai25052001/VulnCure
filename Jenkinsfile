@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-repository/java-project.git'
+                git 'https://github.com/sai25052001/semi-colon.git'
             }
         }
         stage('Build Java Project') {
@@ -24,8 +24,8 @@ pipeline {
         stage('Update Dependencies') {
             steps {
                 sh 'python3 update_dependencies.py'
-                sh 'git config --global user.email "jenkins@example.com"'
-                sh 'git config --global user.name "Jenkins"'
+                sh 'git config --global user.email "sai25052001@gmail.com"'
+                sh 'git config --global user.name "sai25052001"'
                 sh 'git add pom.xml'
                 sh 'git commit -m "Auto-updated dependencies based on Trivy scan"'
                 sh 'git push origin main'
