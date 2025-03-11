@@ -28,7 +28,9 @@ pipeline {
                 sh 'git config --global user.name "sai25052001"'
                 sh 'git add pom.xml'
                 sh 'git commit -m "Auto-updated dependencies based on Trivy scan"'
-                sh 'git push origin main'
+                 withCredentials([string(credentialsId: 'github-credentials', variable: 'GIT_TOKEN')]) {
+                sh 'git push https://sai25052001:$GIT_TOKEN@github.com/semi-colon.git main'
+                }
             }
         }
         stage('Deploy & Test') {
