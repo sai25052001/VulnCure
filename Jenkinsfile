@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/sai25052001/semi-colon.git'
+                git branch: 'main', url: 'https://github.com/sai25052001/semi-colon.git'
             }
         }
         stage('Build Java Project') {
