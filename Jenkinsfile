@@ -21,9 +21,18 @@ pipeline {
                 sh 'python3 parse_trivy.py'
             }
         }
-        stage('Update Dependencies') {
+        stage('auto fixing the CVEs') {
             steps {
-                sh 'python3 update_dependencies.py'
+                sh 'python3 auto_fix_cves.py'
+            }
+        }
+        stage('Run Trivy Scan again to check the CVEs') {
+            steps {
+                sh 'trivy fs --format json --output trivy-report.json .'
+            }
+        }
+        stage('Update new Dependencies in git') {
+            steps {
                 sh 'git config --global user.email "sai25052001@gmail.com"'
                 sh 'git config --global user.name "sai25052001"'
                 sh 'git add pom.xml'
