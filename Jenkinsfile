@@ -21,14 +21,24 @@ pipeline {
                 sh 'python3 parse_trivy.py'
             }
         }
+        stage('Parse Trivy Report in txt file') {
+            steps {
+                sh 'python3 parse_trivy.py > parse_trivy_output.txt '
+            }
+        }
         stage('auto fixing the CVEs') {
             steps {
-                sh 'python3 auto_fix_cves.py'
+                sh '/.update.sh'
             }
         }
         stage('Run Trivy Scan again to check the CVEs') {
             steps {
                 sh 'trivy fs --format json --output trivy-report.json .'
+            }
+        }
+        stage('Parse Trivy Report') {
+            steps {
+                sh 'python3 parse_trivy.py'
             }
         }
         stage('Update new Dependencies in git') {
@@ -58,13 +68,6 @@ pipeline {
                    }
                 }
             }
-
-        stage('Deploy & Test') {
-            steps {
-                sh 'mvn test'
-                sh 'mvn verify'
-            }
-        }
     }
 }
 
