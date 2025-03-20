@@ -28,7 +28,7 @@ pipeline {
         }
         stage('auto fixing the CVEs') {
             steps {
-                sh '/.update.sh'
+                sh './update.sh'
             }
         }
         stage('Run Trivy Scan again to check the CVEs') {
