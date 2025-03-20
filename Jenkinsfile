@@ -36,7 +36,7 @@ pipeline {
                 sh 'trivy fs --format json --output trivy-report.json .'
             }
         }
-        stage('Parse Trivy Report') {
+        stage('Parse Trivy Report again to check CVEs') {
             steps {
                 sh 'python3 parse_trivy.py'
             }
