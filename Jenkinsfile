@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Parse Trivy Report in txt file') {
             steps {
-                sh 'python3 parse_trivy.py > parse_trivy_output.txt '
+                sh 'python3 parse_trivy.py > parse_trivy_output.txt'
             }
         }
         stage('auto fixing the CVEs') {
