@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to your Trivy scan output file
-SCAN_OUTPUT="/root/charan-semi-colon/semi-colon/parse_trivy_output.txt"
+SCAN_OUTPUT="$(pwd)/parse_trivy_output.txt"
 # Path to your pom.xml file
 POM_FILE="pom.xml"
 
