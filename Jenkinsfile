@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Run Trivy Scan') {
             steps {
-                sh 'sudo trivy fs --format json --output trivy-report.json .'
+                sh 'trivy fs --format json --output trivy-report.json .'
             }
         }
         stage('Parse Trivy Report') {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Run Trivy Scan again to check the CVEs') {
             steps {
-                sh 'sudo trivy fs --format json --output trivy-report.json .'
+                sh 'trivy fs --format json --output trivy-report.json .'
             }
         }
         stage('Parse Trivy Report again to check CVEs') {
