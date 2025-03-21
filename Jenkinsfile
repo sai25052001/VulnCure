@@ -50,9 +50,6 @@ pipeline {
                 sh 'git status'
                 sh 'cat pom.xml | grep log4j-core'
 
-                // Ensure auto_fix_cves.py updates pom.xml
-                sh 'python3 auto_fix_cves.py'
-
                 // Debug: Show updated pom.xml
                 sh 'git status'
                 sh 'cat pom.xml | grep log4j-core'
