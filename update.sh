@@ -19,5 +19,5 @@ fi
 # Use sed to replace the version in pom.xml with the new version
 sed -i "s|<version>.*</version>|<version>${NEW_VERSION}</version>|" "$POM_FILE"
 
-echo "Updated log4j-core version to ${NEW_VERSION} in ${POM_FILE}"
+echo "Updated version to the new version in ${POM_FILE}"
 
