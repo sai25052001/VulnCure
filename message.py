@@ -1,6 +1,8 @@
 import boto3
 import csv
 from botocore.exceptions import ClientError
+from datetime import datetime
+import re
 
 # AWS session and clients
 session = boto3.Session(profile_name='default')
@@ -11,22 +13,27 @@ s3_client = session.client('s3', region_name='eu-north-1')
 sns_topic_arn = "arn:aws:sns:eu-north-1:423755635942:VulnCure"
 s3_bucket_name = "myvulncurebucket"  # Replace with your bucket name
 
-# Convert text report to CSV
-def convert_to_csv(text_file_path, csv_file_path):
+# Convert text report to CSV with timestamp
+def convert_to_csv(text_file_path):
     try:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_file_path = f"trivy_report_{timestamp}.csv"
+        
         with open(text_file_path, 'r') as file:
             lines = file.readlines()
         
-        # Assuming Trivy output follows a pattern: CVE, Severity, Description, etc.
+        # Extract CVE details using regex
+        pattern = re.compile(r"CVE:\s*(\S+),\s*Package:\s*(\S+),\s*Installed:\s*(\S+),\s*Fixed:\s*([\S, ]*),\s*Severity:\s*(\S+)")
+        
         with open(csv_file_path, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(["CVE ID", "Severity", "Description"])
+            writer.writerow(["CVE ID", "Package", "Installed Version", "Fixed Versions", "Severity"])
             
             for line in lines:
-                parts = line.strip().split('|')  # Adjust delimiter if necessary
-                if len(parts) >= 3:
-                    writer.writerow(parts[:3])
-        print("CSV file generated successfully.")
+                match = pattern.search(line)
+                if match:
+                    writer.writerow(match.groups())
+        print(f"CSV file generated successfully: {csv_file_path}")
         return csv_file_path
     except Exception as e:
         print(f"Error converting to CSV: {e}")
@@ -50,8 +57,7 @@ def upload_to_s3(file_path, s3_bucket_name):
 
 # Send SNS Email with Pre-signed URL
 def send_sns_email(text_file_path):
-    csv_file_path = "trivy_report.csv"
-    csv_file_path = convert_to_csv(text_file_path, csv_file_path)
+    csv_file_path = convert_to_csv(text_file_path)
     if not csv_file_path:
         return
 
@@ -78,4 +84,3 @@ def send_sns_email(text_file_path):
 # Call function to send email
 file_path = "parse_trivy_output.txt"
 send_sns_email(file_path)
-
