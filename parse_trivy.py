@@ -21,6 +21,10 @@ if __name__ == "__main__":
     report_path = "trivy-report.json"
     vulnerabilities = parse_trivy_report(report_path)
     
-    for vuln in vulnerabilities:
-        print(f"Package: {vuln['Package']}, Installed: {vuln['Installed']}, Fixed: {vuln['Fixed']}, Severity: {vuln['Severity']}")
+    if vulnerabilities:
+        print("Found Vulnerabilities:")
+        for vuln in vulnerabilities:
+            print(f"CVE: {vuln['CVE']}, Package: {vuln['Package']}, Installed: {vuln['Installed']}, Fixed: {vuln['Fixed']}, Severity: {vuln['Severity']}")
+    else:
+        print("No vulnerabilities found. The system is secure.")
 
