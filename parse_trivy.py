@@ -22,7 +22,7 @@ if __name__ == "__main__":
     vulnerabilities = parse_trivy_report(report_path)
     
     if vulnerabilities:
-        print("Found Vulnerabilities:")
+        print(f"Found {len(vulnerabilities)} Vulnerabilities:")
         for vuln in vulnerabilities:
             print(f"CVE: {vuln['CVE']}, Package: {vuln['Package']}, Installed: {vuln['Installed']}, Fixed: {vuln['Fixed']}, Severity: {vuln['Severity']}")
     else:

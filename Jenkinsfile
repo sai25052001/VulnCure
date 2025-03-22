@@ -26,6 +26,11 @@ pipeline {
                 sh 'python3 parse_trivy.py > parse_trivy_output.txt'
             }
         }
+        stage('Sending Reports  through mail'){
+            steps {
+                sh 'python3 message.py'
+            }
+        }
         stage('auto fixing the CVEs') {
             steps {
                 sh './update.sh'
@@ -39,6 +44,19 @@ pipeline {
         stage('Parse Trivy Report again to check CVEs') {
             steps {
                 sh 'python3 parse_trivy.py'
+            }
+        }
+        stage('Parse Trivy Report in txt file') {
+            steps {
+                sh '''
+                    python3 parse_trivy.py > parse_trivy_output.txt
+                    echo "CVEs required human interaction" >> parse_trivy_output.txt
+                   '''
+                  }
+        }
+        stage('Sending Reports through mail after fix'){
+            steps {
+                sh 'python3 message.py'
             }
         }
         stage('Update new Dependencies in git') {
