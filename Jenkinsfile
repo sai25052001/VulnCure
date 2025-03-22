@@ -41,6 +41,21 @@ pipeline {
                 }
             }
         }
+        // Confirmation Stage
+        stage('Approval Before fixing the CVE's') {
+            steps {
+                script {
+                    def userInput = input message: 'Proceed with auto fixing the CVEs?', 
+                                           ok: 'Yes', 
+                                           parameters: [
+                                               choice(name: 'approval', choices: ['Yes', 'No'], description: 'Select Yes to proceed or No to abort')
+                                           ]
+                    if (userInput == 'No') {
+                        error('Pipeline aborted by user.')
+                    }
+                }
+            }
+        }
 
         stage('auto fixing the CVEs') {
             steps {
