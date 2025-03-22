@@ -1,6 +1,8 @@
 import boto3
 from botocore.exceptions import ClientError
 
+session = boto3.Session(profile_name='default')
+sns_client = session.client('sns')
 # AWS SNS client
 sns_client = boto3.client('sns', region_name='eu-north-1')
 
