@@ -43,9 +43,14 @@ pipeline {
         }
         stage('Approval') {
             steps {
-                input message: 'please check mail, There you can see the list of reported CVEs, if you want to process press yes?', ok: 'Yes, Proceed'
-            }
+                script {
+                def userInput = input message: 'Please check mail. There you can see the list of reported CVEs. If you want to process, press Yes?', 
+                            ok: 'Yes, Proceed'
+                echo "Approval received. Proceeding with the pipeline."
+                        }
+                }
         }
+        
         stage('auto fixing the CVEs') {
             steps {
                 sh './update.sh'
