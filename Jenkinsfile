@@ -42,7 +42,7 @@ pipeline {
             }
         }
         // Confirmation Stage
-        stage('Approval Before fixing the CVE's') {
+        stage('Approval Before fixing the CVEs') {
             steps {
                 script {
                     def userInput = input message: 'Proceed with auto fixing the CVEs?', 
