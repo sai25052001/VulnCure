@@ -31,7 +31,7 @@ pipeline {
                 withCredentials([
                    string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY_ID'), 
                    string(credentialsId: 'aws_secret_key', variable: 'AWS_SECRET_ACCESS_KEY')
-        ]        ) {
+                  ]) {
                 sh '''
                 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
@@ -40,7 +40,7 @@ pipeline {
                 '''
                 }
             }
-}
+        }
 
         stage('auto fixing the CVEs') {
             steps {
@@ -67,13 +67,16 @@ pipeline {
         }
         stage('Sending Reports through mail after fix'){
              steps {
-                withCredentials([string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY'), 
-                                 string(credentialsId: 'aws_secret_key', variable: 'AWS_SECRET_KEY')]) {
-                    sh """
-                    aws configure set aws_access_key_id $AWS_ACCESS_KEY
-                    aws configure set aws_secret_access_key $AWS_SECRET_KEY
-                    python3 message.py
-                    """
+                withCredentials([
+                   string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY_ID'), 
+                   string(credentialsId: 'aws_secret_key', variable: 'AWS_SECRET_ACCESS_KEY')
+                  ]) {
+                sh '''
+                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                export AWS_DEFAULT_REGION=eu-north-1
+                python3 message.py
+                '''
                 }
             }
         }
