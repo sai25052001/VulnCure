@@ -21,7 +21,7 @@ pipeline {
                 sh 'python3 parse_trivy.py'
             }
         }
-        stage('Parse Trivy Report in txt file') {
+        stage('Parse Trivy Report in txt file before scan') {
             steps {
                 sh 'python3 parse_trivy.py > parse_trivy_output.txt'
             }
@@ -46,7 +46,7 @@ pipeline {
                 sh 'python3 parse_trivy.py'
             }
         }
-        stage('Parse Trivy Report in txt file') {
+        stage('Parse Trivy Report in txt file after scan') {
             steps {
                 sh '''
                     python3 parse_trivy.py > parse_trivy_output.txt
