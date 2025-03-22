@@ -27,12 +27,15 @@ pipeline {
             }
         }
         stage('Sending Reports  through mail'){
-            environment {
-               AWS_ACCESS_KEY_ID = credentials('aws_access_key')
-               AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
-            }
             steps {
-                sh 'python3 message.py --profile default'
+                withCredentials([string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY'), 
+                                 string(credentialsId: 'aws_secret_key', variable: 'AWS_SECRET_KEY')]) {
+                    sh """
+                    aws configure set aws_access_key_id $AWS_ACCESS_KEY
+                    aws configure set aws_secret_access_key $AWS_SECRET_KEY
+                    python3 message.py
+                    """
+                }
             }
         }
         stage('auto fixing the CVEs') {
@@ -59,8 +62,15 @@ pipeline {
                   }
         }
         stage('Sending Reports through mail after fix'){
-            steps {
-                sh 'python3 message.py --profile default'
+             steps {
+                withCredentials([string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY'), 
+                                 string(credentialsId: 'aws_secret_key', variable: 'AWS_SECRET_KEY')]) {
+                    sh """
+                    aws configure set aws_access_key_id $AWS_ACCESS_KEY
+                    aws configure set aws_secret_access_key $AWS_SECRET_KEY
+                    python3 message.py
+                    """
+                }
             }
         }
         stage('Update new Dependencies in git') {
