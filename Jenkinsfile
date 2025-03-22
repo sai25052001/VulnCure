@@ -50,7 +50,7 @@ pipeline {
             steps {
                 sh '''
                     python3 parse_trivy.py > parse_trivy_output.txt
-                    echo "CVEs required human interaction" >> parse_trivy_output.txt
+                    cat post_autofix_message.txt >> parse_trivy_output.txt
                    '''
                   }
         }
