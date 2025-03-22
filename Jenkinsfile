@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Sending Reports  through mail'){
             steps {
-                sh 'python3 message.py'
+                sh 'python3 message.py --profile default'
             }
         }
         stage('auto fixing the CVEs') {
@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Sending Reports through mail after fix'){
             steps {
-                sh 'python3 message.py'
+                sh 'python3 message.py --profile default'
             }
         }
         stage('Update new Dependencies in git') {
