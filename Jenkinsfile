@@ -41,22 +41,11 @@ pipeline {
                 }
             }
         }
-        // Confirmation Stage
-        stage('Approval Before fixing the CVEs') {
+        stage('Approval') {
             steps {
-                script {
-                    def userInput = input message: 'Proceed with auto fixing the CVEs?', 
-                                           ok: 'Yes', 
-                                           parameters: [
-                                               choice(name: 'approval', choices: ['Yes', 'No'], description: 'Select Yes to proceed or No to abort')
-                                           ]
-                    if (userInput == 'No') {
-                        error('Pipeline aborted by user.')
-                    }
-                }
+                input message: 'please check mail, There you can see the list of reported CVEs, if you want to process press yes?', ok: 'Yes, Proceed'
             }
         }
-
         stage('auto fixing the CVEs') {
             steps {
                 sh './update.sh'
