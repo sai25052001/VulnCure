@@ -4,10 +4,9 @@ from botocore.exceptions import ClientError
 from datetime import datetime
 import re
 
-# AWS session and clients
-session = boto3.Session(profile_name='default')
-sns_client = session.client('sns', region_name='eu-north-1')
-s3_client = session.client('s3', region_name='eu-north-1')
+# AWS session and clients using environment variables
+sns_client = boto3.client('sns', region_name='eu-north-1')
+s3_client = boto3.client('s3', region_name='eu-north-1')
 
 # Config
 sns_topic_arn = "arn:aws:sns:eu-north-1:423755635942:VulnCure"
