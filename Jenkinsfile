@@ -92,15 +92,9 @@ pipeline {
             steps {
                 sh 'git config --global user.email "sai25052001@gmail.com"'
                 sh 'git config --global user.name "sai25052001"'
-
-                // Debug: Check if pom.xml actually changed
+    
                 sh 'git status'
-                sh 'cat pom.xml | grep log4j-core'
-
-                // Debug: Show updated pom.xml
-                sh 'git status'
-                sh 'cat pom.xml | grep log4j-core'
-
+            
                 // Add file only if it has changed
                 sh 'git add pom.xml || true'
 
